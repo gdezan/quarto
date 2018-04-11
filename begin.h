@@ -1,6 +1,9 @@
 #ifndef begin_H_
 #define begin_H_
 
+#define HEXADECIMAL 1
+#define BINARY 2
+#define EMPTY -1
 
 int slots[16];
 int binarySlots[16][4];
@@ -12,10 +15,10 @@ void boardTypeCheck (){  // checks what on type of board the user wants to play
     scanf("%s", &board);
     for(;;){
         if ((board[0] == 72 || board[0] == 104) && strlen(board)<=2){ // if the input is 'H' or 'h'
-            boardType = 1;
+            boardType = HEXADECIMAL;
             break;
         } else if ((board[0] == 66 || board[0] == 98) && strlen(board)<=2){ // if the input is 'B' or 'b'
-            boardType = 2;
+            boardType = BINARY;
             break;
         } else {
             printf("Please try again typing the letter \"h\" or the letter \"b\"\n");
@@ -27,8 +30,8 @@ void boardTypeCheck (){  // checks what on type of board the user wants to play
 
 void initializeSlots(){  // initializes the answer array to print empty spaces on the board
     for (int i = 0; i < 16; i++){
-        slots[i] = -1;
-        binarySlots[i][0] = -1;
+        slots[i] = EMPTY;
+        binarySlots[i][0] = EMPTY;
     }
 }
 
@@ -45,10 +48,10 @@ void printHexBoard(int position, int number){ // prints the board after receivin
     int counter = 0;
     for (int i = 0; i < 4; i++){
         for (int j = 0; j < 4; j++){
-            if (slots[counter] == -1) {
+            if (slots[counter] == EMPTY) {
                 printf("| |");
             }  else {
-                printf("|%x|",slots[counter]);
+                printf("|%X|",slots[counter]);
             }
 
                 counter++;
@@ -64,7 +67,7 @@ void printBinaryBoard(int position, int number){ // prints the board using binar
     int counter = 0;
     for (int i = 0; i < 4; i++){
         for (int j = 0; j < 4; j++){
-            if (slots[counter] == -1) {
+            if (slots[counter] == EMPTY) {
                 printf("|    |");
             }  else {
                 printf("|");

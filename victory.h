@@ -44,7 +44,7 @@ int winCheck() { //function to check victory
             }
         }
     }
-    for (bit = 0; bit < 4; bit++) {   //checks if there is any alignments on the first diagonal
+    for (bit = 0; bit < 4; bit++) {   //checks if there is any alignments on the first diagonal (slots 0, 5, A and F)
         for (slot = 0; slot < 16; slot = slot+5){
             if (binarySlots[slot][bit] == binarySlots[slot+5][bit] && binarySlots[slot][0] != -1 && slot == 0){
                 won++;
@@ -62,7 +62,7 @@ int winCheck() { //function to check victory
             won = 0;
         }
     }
-    for (bit = 0; bit < 4; bit++) {   //checks if there is any alignments on the second diagonal
+    for (bit = 0; bit < 4; bit++) {   //checks if there is any alignments on the second diagonal (slots 3, 6, 9 and C)
         for (slot = 3; slot < 13; slot = slot+3){
             if (binarySlots[slot][bit] == binarySlots[slot+3][bit] && binarySlots[slot][0] != -1 && slot == 3){
                     won++;

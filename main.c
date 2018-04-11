@@ -48,9 +48,9 @@ int main()
     pos = positionChecker();
     binaryArray(pos,ans);
     printf("\n");
-    if (boardType == 1) {
+    if (boardType == HEXADECIMAL) {
         printHexBoard(pos, ans);
-    } else if (boardType == 2) {
+    } else if (boardType == BINARY) {
         printBinaryBoard(pos, ans);
     }
 
