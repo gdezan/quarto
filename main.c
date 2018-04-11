@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "begin.h"
 #include "victory.h"
 #include "checks.h"
@@ -8,6 +9,7 @@ int main()
 {
     int pos, ans, pNumber;
     initializeSlots();
+    boardTypeCheck();
     printf("- Player 1:\n");
     printf("Enter the next number: ");
     ans = numberChecker();
@@ -24,7 +26,11 @@ int main()
         pos = positionChecker();
         binaryArray(pos,ans);
         printf("\n");
-        printBoard(pos,ans);
+	    if (boardType == 1) {
+	        printHexBoard(pos, ans);
+	    } else if (boardType == 2) {
+	        printBinaryBoard(pos, ans);
+	    }
 
         if (winCheck()==4){
             printf(" ------------------------ Player %d won ------------------------\n", pNumber);
@@ -42,7 +48,11 @@ int main()
     pos = positionChecker();
     binaryArray(pos,ans);
     printf("\n");
-    printBoard(pos,ans);
+    if (boardType == 1) {
+        printHexBoard(pos, ans);
+    } else if (boardType == 2) {
+        printBinaryBoard(pos, ans);
+    }
 
     if (winCheck()==4){
         printf(" ------------------------ Player %d won ------------------------\n", pNumber);
