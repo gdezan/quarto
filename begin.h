@@ -6,7 +6,7 @@ int slots[16];
 int binarySlots[16][4];
 int boardType = 1;
 
-void boardTypeCheck (){
+void boardTypeCheck (){  // checks what on type of board the user wants to play
     char board[30];
     printf("Welcome to Quarto!\n\nPlease choose your board type by entering the corresponding letter:\n[h] Fills the board with hexadecimal numbers -- [b] Fills the board with binary numbers\n" );
     scanf("%s", &board);

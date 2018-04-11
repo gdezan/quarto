@@ -15,7 +15,7 @@ int main()
     ans = numberChecker();
     printf("\n");
     for (int i = 0; i < 15; i++){
-        if (i % 2 != 0) {
+        if (i % 2 != 0) {  // attributes a number to the player (player 1 / player 2)
             pNumber = 1;
             printf("- Player %d:", pNumber);
         } else {
@@ -33,7 +33,7 @@ int main()
 	    }
 
         if (winCheck()==4){
-            printf(" ------------------------ Player %d won ------------------------\n", pNumber);
+            printf(" ------------------------ Player %d won! ------------------------\n", pNumber);
             system("pause");
             return 0;
         }
@@ -55,8 +55,11 @@ int main()
     }
 
     if (winCheck()==4){
-        printf(" ------------------------ Player %d won ------------------------\n", pNumber);
+        printf(" ------------------------ Player %d won! ------------------------\n", pNumber);
         system("pause");
         return 0;
+    } else {
+    	printf(" ------------------------ It's a Tie! ------------------------\n");
+    	system("pause");
     }
 }
