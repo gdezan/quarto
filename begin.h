@@ -10,14 +10,14 @@ int binarySlots[16][4];
 int boardType = 1;
 
 void boardTypeCheck (){  // checks what on type of board the user wants to play
-    char board[30];
+    char board[255];
     printf("Welcome to Quarto!\n\nPlease choose your board type by entering the corresponding letter:\n[h] Fills the board with hexadecimal numbers -- [b] Fills the board with binary numbers\n" );
     scanf("%s", &board);
     for(;;){
-        if ((board[0] == 72 || board[0] == 104) && strlen(board)<=2){ // if the input is 'H' or 'h'
+        if ((board[0] == 72 || board[0] == 104) && strlen(board)==1){ // if the input is 'H' or 'h'
             boardType = HEXADECIMAL;
             break;
-        } else if ((board[0] == 66 || board[0] == 98) && strlen(board)<=2){ // if the input is 'B' or 'b'
+        } else if ((board[0] == 66 || board[0] == 98) && strlen(board)==1){ // if the input is 'B' or 'b'
             boardType = BINARY;
             break;
         } else {
