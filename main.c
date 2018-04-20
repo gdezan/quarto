@@ -11,7 +11,7 @@ int main()
     initializeSlots();
     boardTypeCheck();
     printf("- Player 1:\n");
-    printf("Enter the next number: ");
+    printf("Choose the number: ");
     ans = numberChecker();
     printf("\n");
     for (int i = 0; i < 15; i++){
@@ -22,7 +22,7 @@ int main()
             pNumber = 2;
             printf("- Player %d:", pNumber);
         }
-        printf("\nEnter the position of the previous number: ");
+        printf("\nChoose a position for the number: ");
         pos = positionChecker();
         binaryArray(pos,ans);
         printf("\n");
@@ -31,20 +31,20 @@ int main()
 	    } else if (boardType == 2) {
 	        printBinaryBoard(pos, ans);
 	    }
-
+        
         if (winCheck()==4){
             printf(" ------------------------ Player %d won! ------------------------\n", pNumber);
             system("pause");
             return 0;
         }
 
-        printf("Enter the next number: ");
+        printf("Choose the next number: ");
         ans = numberChecker();
         printf("\n");
 
     }
     printf("- Player 2:\n");
-    printf("\nEnter the position of the previous number: ");
+    printf("\nChoose a position for the number: ");
     pos = positionChecker();
     binaryArray(pos,ans);
     printf("\n");
