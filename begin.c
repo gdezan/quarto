@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "begin.h"
+#include "ai.h"
 
 void boardTypeCheck (){  // checks what on type of board the user wants to play
     char board[255];
@@ -54,7 +55,6 @@ void printHexBoard(int position, int number){ // prints the board after receivin
     }
     printf("\n");
 }
-
 
 void printBinaryBoard(int position, int number){ // prints the board using binary numbers
     slots[position] = number;
@@ -124,17 +124,17 @@ int positionChecker(){  // uses a while loop to take and check the if the positi
     return required;
 }
 
-int winCheck() { //function to check victory
+int winCheck(int arr[16][4]) { //function to check victory
     int won = 0;
     int slot, bit, line, column;
     for (line = 0; line < 16; line = line+4){  //checks if there is any alignments on the lines
         for (bit = 0; bit < 4; bit++) {
             for (slot = line; slot < line+4; slot++){
-                if (binarySlots[slot][bit] == binarySlots[slot+1][bit] && binarySlots[slot][0] != -1 && slot == line){
+                if (arr[slot][bit] == arr[slot+1][bit] && arr[slot][0] != -1 && slot == line){
                     won++;
                     slot++;
                 }
-                if (binarySlots[slot][bit] == binarySlots[slot-1][bit] && binarySlots[slot][0] != -1){
+                if (arr[slot][bit] == arr[slot-1][bit] && arr[slot][0] != -1){
                     won++;
                 } else {
                     won = 0;
@@ -150,11 +150,11 @@ int winCheck() { //function to check victory
     for (column = 0; column < 4; column++){  //checks if there is any alignments on the columns
         for (bit = 0; bit < 4; bit++) {
             for (slot = column; slot < column+13; slot = slot+4){
-                if (binarySlots[slot][bit] == binarySlots[slot+4][bit] && binarySlots[slot][0] != -1 && slot == column){
+                if (arr[slot][bit] == arr[slot+4][bit] && arr[slot][0] != -1 && slot == column){
                     won++;
                     slot=slot+4;
                 }
-                if (binarySlots[slot][bit] == binarySlots[slot-4][bit] && binarySlots[slot][0] != -1){
+                if (arr[slot][bit] == arr[slot-4][bit] && arr[slot][0] != -1){
                     won++;
                 } else {
                     won = 0;
@@ -169,11 +169,11 @@ int winCheck() { //function to check victory
     }
     for (bit = 0; bit < 4; bit++) {   //checks if there is any alignments on the first diagonal (slots 0, 5, A and F)
         for (slot = 0; slot < 16; slot = slot+5){
-            if (binarySlots[slot][bit] == binarySlots[slot+5][bit] && binarySlots[slot][0] != -1 && slot == 0){
+            if (arr[slot][bit] == arr[slot+5][bit] && arr[slot][0] != -1 && slot == 0){
                 won++;
                 slot=slot+5;
             }
-            if (binarySlots[slot][bit] == binarySlots[slot-5][bit] && binarySlots[slot][0] != -1){
+            if (arr[slot][bit] == arr[slot-5][bit] && arr[slot][0] != -1){
                     won++;
             } else {
                 won = 0;
@@ -187,11 +187,11 @@ int winCheck() { //function to check victory
     }
     for (bit = 0; bit < 4; bit++) {   //checks if there is any alignments on the second diagonal (slots 3, 6, 9 and C)
         for (slot = 3; slot < 13; slot = slot+3){
-            if (binarySlots[slot][bit] == binarySlots[slot+3][bit] && binarySlots[slot][0] != -1 && slot == 3){
+            if (arr[slot][bit] == arr[slot+3][bit] && arr[slot][0] != -1 && slot == 3){
                     won++;
                     slot=slot+3;
             }
-            if (binarySlots[slot][bit] == binarySlots[slot-3][bit] && binarySlots[slot][0] != -1){
+            if (arr[slot][bit] == arr[slot-3][bit] && arr[slot][0] != -1){
                 won++;
             } else {
                 won = 0;
@@ -223,6 +223,7 @@ int multiplayer() { // main function to play the game with no AI
         printf("\nChoose a position for the number: ");
         pos = positionChecker();
         binaryArray(pos,ans);
+        aiPlace();
         printf("\n");
 	    if (boardType == HEXADECIMAL) {
 	        printHexBoard(pos, ans);
@@ -230,7 +231,7 @@ int multiplayer() { // main function to play the game with no AI
 	        printBinaryBoard(pos, ans);
 	    }
         
-        if (winCheck()==4){
+        if (winCheck(binarySlots)==4){
             printf(" ------------------------ Player %d won! ------------------------\n", pNumber);
             system("pause");
             return 0;
@@ -252,7 +253,7 @@ int multiplayer() { // main function to play the game with no AI
         printBinaryBoard(pos, ans);
     }
 
-    if (winCheck()==4){
+    if (winCheck(binarySlots)==4){
         printf(" ------------------------ Player %d won! ------------------------\n", pNumber);
         system("pause");
         return 0;
