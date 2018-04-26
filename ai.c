@@ -73,34 +73,35 @@ int aiChoose() { // will return a new piece for the player to choose the positio
         possible = 1;
         used = 0;
         for (int j = 0; j < 16; j++){
-            if (slots[j] == -1){
-                tmp = i;
-                for (int k = 0; k < 4; k++){
-                    testArr[j][3-k] = tmp % 2;
-                    tmp = tmp/2;
-                }
-                if (winCheck(testArr) == 4){
-                    possible = 0;
-                }
-                for (int k = 0; k < 4; k++){
-                    testArr[j][k] = binarySlots[j][k];
-                }
-
-            }
-        }
-        for (int j = 0; j < 16; j++){
             if (i == slots[j]) {
                 used = 1;
             }
         }
-        if (possible == 1 && used == 0){
-            possibleArr[counter] = i;
-            counter++;
+        if (used == 0) {
+            for (int j = 0; j < 16; j++){
+                if (slots[j] == -1){
+                    tmp = i;
+                    for (int k = 0; k < 4; k++){
+                        testArr[j][3-k] = tmp % 2;
+                        tmp = tmp/2;
+                    }
+                    if (winCheck(testArr) == 4){
+                        possible = 0;
+                    }
+                    for (int k = 0; k < 4; k++){
+                        testArr[j][k] = binarySlots[j][k];
+                    }
+
+                }
+            }
+            if (possible == 1){
+                possibleArr[counter] = i;
+                counter++;
+            }
         }
     }
     int randIndex = rand() % (counter+1);
-    num = possibleArr[randIndex];
-    if (num == -1){
+    if (possibleArr[0] == -1){
         used = 1;
         while (used == 1){
             used = 0;
@@ -111,6 +112,8 @@ int aiChoose() { // will return a new piece for the player to choose the positio
                 }
             }
         }
+    } else {
+        num = possibleArr[randIndex];
     }
     return num;
 }
@@ -136,7 +139,7 @@ int aiPlay() {
         }
         ans = aiChoose();
         printf("\n");
-        printf("\nChoose a position for the number %d: ", ans);
+        printf("\nChoose a position for the number %X: ", ans);
         pos = positionChecker();
         binaryArray(pos,ans);
         printf("\n");
