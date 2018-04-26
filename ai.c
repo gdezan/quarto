@@ -58,6 +58,7 @@ int aiPlace (int ans){ // will return the position of the piece chosen by the pl
 int aiChoose() { // will return a new piece for the player to choose the position
     
     int tmp, possible, used; 
+    int counter = 0;
     int testArr[16][4];
     int possibleArr[16];
     int num = -1;
@@ -93,13 +94,23 @@ int aiChoose() { // will return a new piece for the player to choose the positio
             }
         }
         if (possible == 1 && used == 0){
-            possibleArr[i] = i;
+            possibleArr[counter] = i;
+            counter++;
         }
     }
-    int randIndex = rand() % 16;
+    int randIndex = rand() % (counter+1);
     num = possibleArr[randIndex];
-    while (num == -1){
-        num = possibleArr[randIndex];
+    if (num == -1){
+        used = 1;
+        while (used == 1){
+            used = 0;
+            num = rand() % 16;
+            for (int j = 0; j < 16; j++){
+                if (num == slots[j]) {
+                    used = 1;
+                }
+            }
+        }
     }
     return num;
 }

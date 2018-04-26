@@ -13,4 +13,5 @@ int main()
     initializeSlots();
     boardTypeCheck();
     aiPlay();
+    printf("\n");
 }
