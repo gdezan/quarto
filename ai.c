@@ -20,112 +20,128 @@ void innitPossible() {
     }
 }
 
-void aiPlace() { // function for the AI to place the winning piece
-    
-    int slot, emptySlot, emptyCount, used; 
+int aiPlace (int ans){ // will return the position of the piece chosen by the player
+    int tmp, pos, used; 
     int testArr[16][4];
     for (int i = 0; i < 16; i++){
         for (int j = 0; j < 4; j++){
             testArr[i][j] = binarySlots[i][j];
         }
     }
-    for (int line = 0; line < 16; line = line+4){ // check if there is a winning place in the lines
-        emptyCount = 0;
-        for (slot = line; slot < line+4; slot++){
-            if (testArr[slot][0] == -1){
-                emptyCount++;
-                emptySlot = slot;
+    for (int i = 0; i < 16; i++){
+        used = 0;
+        tmp = ans;
+        for (int j = 0; j < 4; j++){
+            testArr[i][3-j] = tmp % 2;
+            tmp = tmp/2;
+        }
+        for (int j = 0; j < 16; j++){
+            if (i == slots[j]) {
+                used = 1;
             }
         }
-        if (emptyCount == 1){
-            for (int i = 0; i < 16; i++){
-                for (int j = 0; j < 4; j++){
-                    testArr[emptySlot][j] = possibleAnswers[i][j];
-                }
-                used = 0;
-                for (int k = 0; k < 16; k++){
-                    if (i == slots[k]) {
-                        used = 1;
-                    }
-                }
-                if (winCheck(testArr) == 4 && used != 1){
-                    slots[emptySlot] = i;
-                    for (int j = 0; j < 4; j++){
-                        binarySlots[emptySlot][j] = testArr[emptySlot][j];
-                    }   
-                }
+        if (winCheck(testArr)== 4 && used == 0){
+            return i; 
+        } else {
+            for (int j = 0; j < 4; j++){
+                testArr[i][j] = binarySlots[i][j];
             }
-        }
+        }        
     }
-    for (int column = 0; column < 4; column++){ // check if there is a winning place in the columns
-        emptyCount = 0;
-        for (slot = column; slot < column+13; slot = slot+4){
-            if (testArr[slot][0] == -1){
-                emptyCount++;
-                emptySlot = slot;
-            }
-        }
-        if (emptyCount == 1){
-            for (int i = 0; i < 16; i++){
-                for (int j = 0; j < 4; j++){
-                    testArr[emptySlot][j] = possibleAnswers[i][j];
-                }
-                for (int k = 0; k < 16; k++){
-                    if (i == slots[k]) {
-                        used = 1;
-                    }
-                }
-                if (winCheck(testArr) == 4 && used != 1){
-                    slots[emptySlot] = i;
-                    for (int j = 0; j < 4; j++){
-                        binarySlots[emptySlot][j] = testArr[emptySlot][j];
-                    }   
-                }
-            }
-        }
+    pos = rand() % 16;
+    while (slots[pos] != -1){
+        pos = rand() % 16;
     }
-        
-    // for (slot = 0; slot < 16; slot = slot+5){ // check if there is a winning place in the first diagonal
-    //     emptyCount = 0;
-    //     if (testArr[slot][0] == -1){
-    //         emptyCount++;
-    //         emptySlot = slot;
-    //     }
-    
-    //     if (emptyCount == 1){
-    //         for (int i = 0; i < 16; i++){
-    //             for (int j = 0; j < 4; j++){
-    //                 testArr[emptySlot][j] = possibleAnswers[i][j];
-    //             }
-    //             if (winCheck(testArr) == 4){
-    //                 slots[emptySlot] = i;
-    //                 for (int j = 0; j < 4; j++){
-    //                     binarySlots[emptySlot][j] = testArr[emptySlot][j];
-    //                 }   
-    //             }
-    //         }
-    //     }
-    // }
+    return pos;
+}
 
-    // for (slot = 3; slot < 13; slot = slot+3){ // check if there is a winning place in the second diagonal
-    //     emptyCount = 0;
-    //     if (testArr[slot][0] == -1){
-    //         emptyCount++;
-    //         emptySlot = slot;
-    //     }
+int aiChoose() { // will return a new piece for the player to choose the position
     
-    //     if (emptyCount == 1){
-    //         for (int i = 0; i < 16; i++){
-    //             for (int j = 0; j < 4; j++){
-    //                 testArr[emptySlot][j] = possibleAnswers[i][j];
-    //             }
-    //             if (winCheck(testArr) == 4){
-    //                 slots[emptySlot] = i;
-    //                 for (int j = 0; j < 4; j++){
-    //                     binarySlots[emptySlot][j] = testArr[emptySlot][j];
-    //                 }   
-    //             }
-    //         }
-    //     }
-    // }
+    int tmp, possible, used; 
+    int testArr[16][4];
+    int possibleArr[16];
+    int num = -1;
+    for (int i = 0; i < 16; i++){
+        possibleArr[i] = -1;
+        for (int j = 0; j < 4; j++){
+            testArr[i][j] = binarySlots[i][j];
+        }
+    }
+
+    for (int i = 0; i < 16; i++){
+        possible = 1;
+        used = 0;
+        for (int j = 0; j < 16; j++){
+            if (slots[j] == -1){
+                tmp = i;
+                for (int k = 0; k < 4; k++){
+                    testArr[j][3-k] = tmp % 2;
+                    tmp = tmp/2;
+                }
+                if (winCheck(testArr) == 4){
+                    possible = 0;
+                }
+                for (int k = 0; k < 4; k++){
+                    testArr[j][k] = binarySlots[j][k];
+                }
+
+            }
+        }
+        for (int j = 0; j < 16; j++){
+            if (i == slots[j]) {
+                used = 1;
+            }
+        }
+        if (possible == 1 && used == 0){
+            possibleArr[i] = i;
+        }
+    }
+    int randIndex = rand() % 16;
+    num = possibleArr[randIndex];
+    while (num == -1){
+        num = possibleArr[randIndex];
+    }
+    return num;
+}
+
+int aiPlay() {
+    int pos, ans, pNumber;
+    printf("- Player:\n");
+    printf("Choose the number: ");
+    ans = numberChecker();
+    printf("\n");
+    for (int i = 0; i < 15; i++){
+        pos = aiPlace(ans);
+        binaryArray(pos,ans);
+        if (boardType == HEXADECIMAL) {
+	        printHexBoard(pos, ans);
+	    } else if (boardType == BINARY) {
+	        printBinaryBoard(pos, ans);
+	    }        
+        if (winCheck(binarySlots)==4){
+            printf(" ------------------------ The AI won! ------------------------\n");
+            system("pause");
+            return 0;
+        }
+        ans = aiChoose();
+        printf("\n");
+        printf("\nChoose a position for the number %d: ", ans);
+        pos = positionChecker();
+        binaryArray(pos,ans);
+        printf("\n");
+	    if (boardType == HEXADECIMAL) {
+	        printHexBoard(pos, ans);
+	    } else if (boardType == BINARY) {
+	        printBinaryBoard(pos, ans);
+	    }
+        if (winCheck(binarySlots)==4){
+            printf(" ------------------------ You won! ------------------------\n");
+            system("pause");
+            return 0;
+        }
+        printf("Choose the next number: ");
+        ans = numberChecker();
+        printf("\n");
+
+    }
 }

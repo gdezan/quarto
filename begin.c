@@ -223,7 +223,6 @@ int multiplayer() { // main function to play the game with no AI
         printf("\nChoose a position for the number: ");
         pos = positionChecker();
         binaryArray(pos,ans);
-        aiPlace();
         printf("\n");
 	    if (boardType == HEXADECIMAL) {
 	        printHexBoard(pos, ans);
@@ -262,3 +261,4 @@ int multiplayer() { // main function to play the game with no AI
     	system("pause");
     }
 }
+

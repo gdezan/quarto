@@ -3,7 +3,9 @@
 
 int possibleAnswers[16][4];
 
-void aiPlace();
 void innitPossible();
+int aiPlay();
+int aiChoose();
+int aiPlace(int ans);
 
 #endif
