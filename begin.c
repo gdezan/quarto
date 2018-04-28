@@ -4,7 +4,7 @@
 #include "begin.h"
 #include "ai.h"
 
-void boardTypeCheck (){  // checks what on type of board the user wants to play
+void boardTypeCheck(){  // checks what on type of board the user wants to play
     char board[255];
     printf("Welcome to Quarto!\n\nPlease choose your board type by entering the corresponding letter:\n[h] Fills the board with hexadecimal numbers -- [b] Fills the board with binary numbers\n" );
     scanf("%s", &board);
@@ -18,6 +18,28 @@ void boardTypeCheck (){  // checks what on type of board the user wants to play
         } else {
             printf("Please try again typing the letter \"h\" or the letter \"b\"\n");
             scanf("%s", &board);
+        }
+    }
+    printf("\n");
+}
+
+int gameTypeCheck(){  // checks if the player wants to go agains the ai (going first or second) or if he wants to play against another person (multiplayer)
+    char type[255];
+    printf("\nPlease choose your game by entering the corresponding number:\n[1] Multiplayer -- [2] vs. AI (AI goes first) -- [3] vs AI (AI goes second)\n" );
+    scanf("%s", &type);
+    for(;;){
+        if ((type[0] == 49) && strlen(type)==1){ // if the input is 1
+            return 1;
+            break;
+        } else if ((type[0] == 50) && strlen(type)==1){ // if the input is 2
+            return 2;
+            break;
+        } else if ((type[0] == 51) && strlen(type)==1){ // if the input is 3
+            return 3;
+            break;
+        } else {
+            printf("Please try again by typing the number \"1\", \"2\" or \'3\".\n");
+            scanf("%s", &type);
         }
     }
     printf("\n");
@@ -259,6 +281,7 @@ int multiplayer() { // main function to play the game with no AI
     } else {
     	printf(" ------------------------ It's a Tie! ------------------------\n");
     	system("pause");
+        return 0;
     }
 }
 

@@ -8,10 +8,15 @@
 int main()
 {
     srand(time(NULL));
-    innitPossible();
-    //test();
     initializeSlots();
     boardTypeCheck();
-    aiPlay();
+    int game = gameTypeCheck();
+    if (game == 1){
+        multiplayer();
+    } else if (game == 2){
+        aiPlayFirst();
+    } else {
+        aiPlaySecond();
+    }
     printf("\n");
 }
