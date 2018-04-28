@@ -6,8 +6,8 @@
 
 void boardTypeCheck(){  // checks what on type of board the user wants to play
     char board[255];
-    printf("Welcome to Quarto!\n\nPlease choose your board type by entering the corresponding letter:\n[h] Fills the board with hexadecimal numbers -- [b] Fills the board with binary numbers\n" );
-    scanf("%s", &board);
+    printf("Welcome to Quarto!\n\nPlease choose your board type by entering the corresponding letter:\n[h] Fills the board with hexadecimal numbers -- [b] Fills the board with binary numbers\n\n" );
+    scanf("%s", board);
     for(;;){
         if ((board[0] == 72 || board[0] == 104) && strlen(board)==1){ // if the input is 'H' or 'h'
             boardType = HEXADECIMAL;
@@ -17,16 +17,15 @@ void boardTypeCheck(){  // checks what on type of board the user wants to play
             break;
         } else {
             printf("Please try again typing the letter \"h\" or the letter \"b\"\n");
-            scanf("%s", &board);
+            scanf("%s", board);
         }
     }
-    printf("\n");
 }
 
 int gameTypeCheck(){  // checks if the player wants to go agains the ai (going first or second) or if he wants to play against another person (multiplayer)
     char type[255];
-    printf("\nPlease choose your game by entering the corresponding number:\n[1] Multiplayer -- [2] vs. AI (AI goes first) -- [3] vs AI (AI goes second)\n" );
-    scanf("%s", &type);
+    printf("\nPlease choose your game type by entering the corresponding number:\n[1] Multiplayer -- [2] vs. AI (AI goes first) -- [3] vs. AI (AI goes second)\n\n" );
+    scanf("%s", type);
     for(;;){
         if ((type[0] == 49) && strlen(type)==1){ // if the input is 1
             return 1;
@@ -38,14 +37,13 @@ int gameTypeCheck(){  // checks if the player wants to go agains the ai (going f
             return 3;
             break;
         } else {
-            printf("Please try again by typing the number \"1\", \"2\" or \'3\".\n");
-            scanf("%s", &type);
+            printf("Please try again by typing the number \"1\", \"2\" or \"3\".\n");
+            scanf("%s", type);
         }
     }
-    printf("\n");
 }
 
-void initializeSlots(){  // initializes the answer array to print empty spaces on the board
+void initializeSlots(){  // initializes the answer arrays
     for (int i = 0; i < 16; i++){
         slots[i] = EMPTY;
         binarySlots[i][0] = EMPTY;
@@ -100,13 +98,13 @@ void printBinaryBoard(int position, int number){ // prints the board using binar
     printf("\n");
 }
 
-int numberChecker(){  // uses a while loop to take and check the if the input is compatible and, if not, take the input again
+int numberChecker(){  // uses a loop to take and check the if the input is compatible and, if not, take the input again
     char readUser[255];
     int required;
     int used;
     for (;;) {
         used = 0;
-        scanf("%s",&readUser);
+        scanf("%s", readUser);
         required = strtoul(readUser,0,16);
         for (int i = 0; i < 16; i++){
             if (required == slots[i]) {
@@ -124,13 +122,13 @@ int numberChecker(){  // uses a while loop to take and check the if the input is
     return required;
 }
 
-int positionChecker(){  // uses a while loop to take and check the if the position is not taken and, if it is, take the position again
+int positionChecker(){  // uses a loop to take and check the if the position is not taken and, if it is, take the position again
     char readUser[255];
     int required;
     int used;
     for (;;) {
         used = 0;
-        scanf("%s",&readUser);
+        scanf("%s", readUser);
         required = strtoul(readUser,0,16);
         if (slots[required] != EMPTY) {
             used = 1;
@@ -230,8 +228,8 @@ int winCheck(int arr[16][4]) { //function to check victory
 
 int multiplayer() { // main function to play the game with no AI
     int pos, ans, pNumber;
-    printf("- Player 1:\n");
-    printf("Choose the number: ");
+    printf("\n- Player 1:\n");
+    printf("Choose a number: ");
     ans = numberChecker();
     printf("\n");
     for (int i = 0; i < 15; i++){
@@ -242,7 +240,7 @@ int multiplayer() { // main function to play the game with no AI
             pNumber = 2;
             printf("- Player %d:", pNumber);
         }
-        printf("\nChoose a position for the number: ");
+        printf("\nChoose a position for the number %d: ", ans);
         pos = positionChecker();
         binaryArray(pos,ans);
         printf("\n");
@@ -258,13 +256,13 @@ int multiplayer() { // main function to play the game with no AI
             return 0;
         }
 
-        printf("Choose the next number: ");
+        printf("Choose a number: ");
         ans = numberChecker();
         printf("\n");
 
     }
     printf("- Player 2:\n");
-    printf("\nChoose a position for the number: ");
+    printf("\nChoose a position for the number %d: ", ans);
     pos = positionChecker();
     binaryArray(pos,ans);
     printf("\n");
