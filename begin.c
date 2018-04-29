@@ -240,7 +240,7 @@ int multiplayer() { // main function to play the game with no AI
             pNumber = 2;
             printf("- Player %d:", pNumber);
         }
-        printf("\nChoose a position for the number %d: ", ans);
+        printf("\nChoose a position for the number %X: ", ans);
         pos = positionChecker();
         binaryArray(pos,ans);
         printf("\n");
@@ -262,7 +262,7 @@ int multiplayer() { // main function to play the game with no AI
 
     }
     printf("- Player 2:\n");
-    printf("\nChoose a position for the number %d: ", ans);
+    printf("\nChoose a position for the number %X: ", ans);
     pos = positionChecker();
     binaryArray(pos,ans);
     printf("\n");
