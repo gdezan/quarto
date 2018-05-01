@@ -4,15 +4,15 @@
 #include "begin.h"
 #include "ai.h"
 
-int aiPlace (int ans){ // will return the position of the piece chosen by the player
+int aiPlace (int ans){ // retorna a posição da peça escolhida pelo jogador
     int tmp, pos; 
-    int testArr[16][4]; // test array to check what positions are able to win
+    int testArr[16][4]; // vetor de teste para conferir quais posições podem vencer
     for (int i = 0; i < 16; i++){
         for (int j = 0; j < 4; j++){
-            testArr[i][j] = binarySlots[i][j]; // copies the original array to begin the tests
+            testArr[i][j] = binarySlots[i][j]; // copia o vetor original para iniciar os testes
         }
     }
-    for (int i = 0; i < 16; i++){ // adds every possible position in the test array and checks if it is a winner position or not
+    for (int i = 0; i < 16; i++){ // testa todas as posições possíveis no vetor de teste para ver quais geram vitória
         tmp = ans;
         for (int j = 0; j < 4; j++){
             testArr[i][3-j] = tmp % 2;
@@ -22,23 +22,23 @@ int aiPlace (int ans){ // will return the position of the piece chosen by the pl
             return i; 
         } else {
             for (int j = 0; j < 4; j++){
-                testArr[i][j] = binarySlots[i][j]; // returns the test array to the original condition so it can test other positions
+                testArr[i][j] = binarySlots[i][j]; // retorna o vetor de teste para suas condições originais para que ele possa testar outras posições
             }
         }        
     }
     pos = rand() % 16;
     while (slots[pos] != EMPTY){
-        pos = rand() % 16;  // if there is no winning position, the function will return a random position (that is empty)
+        pos = rand() % 16;  // se não há nenhuma posição vitoriosa, a função retornará uma posição aleatória que esteja vazia
     }
     return pos;
 }
 
-int aiChooseNumber() { // will return a new piece for the player to choose the position
+int aiChooseNumber() { // retorna um número para o jogador posicionar
     
     int tmp, possible, used; 
     int counter = 0;
-    int testArr[16][4]; // same principle as the test array from aiPlace()
-    int possibleArr[16]; // array that stores numbers that will not give a win to the player
+    int testArr[16][4]; // mesmo principio do vetor de mesmo nome na função aiPlace()
+    int possibleArr[16]; // vetor que guarda os números que não darão uma vitória para o jogador
     int num = -1;
     for (int i = 0; i < 16; i++){
         possibleArr[i] = EMPTY;
@@ -51,19 +51,19 @@ int aiChooseNumber() { // will return a new piece for the player to choose the p
         used = 0;
         for (int j = 0; j < 16; j++){
             if (i == slots[j]) {
-                used = 1; // checks if the number has already been used (1 means yes, 0 means no)
+                used = 1; // confere se o número já foi usado (1 = sim, 0 = não)
             }
         }
         if (used == 0) {
-            for (int j = 0; j < 16; j++){                   // goes through all positions and numbers
+            for (int j = 0; j < 16; j++){                   // passa por todos os números e posições
                 if (slots[j] == EMPTY){                     
                     tmp = i;
                     for (int k = 0; k < 4; k++){
                         testArr[j][3-k] = tmp % 2;
                         tmp = tmp/2;
                     }
-                    if (winCheck(testArr) == VICTORY){      // if a number can give the victory to the player,
-                        possible = 0;                       // it will be discarded
+                    if (winCheck(testArr) == VICTORY){      // se um número for capaz de dar a vitória pro
+                        possible = 0;                       // jogador, ele é descartado
                     }
                     for (int k = 0; k < 4; k++){
                         testArr[j][k] = binarySlots[j][k];
@@ -72,16 +72,16 @@ int aiChooseNumber() { // will return a new piece for the player to choose the p
                 }
             }
             if (possible == 1){
-                possibleArr[counter] = i; // adds the possible answers in the array
+                possibleArr[counter] = i; // adiciona as respostas possíveis no vetor
                 counter++;
             }
         }
     }
     int randIndex = rand() % (counter);
-    if (possibleArr[0] == -1){                  // if this condition is met, it means that there 
-        used = 1;                               // is no number that can't give a win to the player.
-        while (used == 1){                      // The function will then return a random 
-            used = 0;                           // number that hasn't been used
+    if (possibleArr[0] == -1){                  // Se essa condição ocorrer, significa que não há 
+        used = 1;                               // nenhum número que não dê vitória para o jogador.
+        while (used == 1){                      // A função então irá retornar um número qualquer
+            used = 0;                           // que não tenha sido usado
             num = rand() % 16;
             for (int j = 0; j < 16; j++){
                 if (num == slots[j]) {
@@ -90,15 +90,15 @@ int aiChooseNumber() { // will return a new piece for the player to choose the p
             }
         }
     } else {
-        num = possibleArr[randIndex]; // returns a random number that won't give a win to the player
+        num = possibleArr[randIndex]; // retorna um número aleatório que não dará a vitória pro jogador
     }
     return num;
 }
 
-int aiPlaySecond() { // main function to play the game against AI (player goes first)
+int aiPlaySecond() { // função principal para jogar o jogo contra a IA (IA joga primeiro)
     int pos, ans;
-    printf("\n- Player:\n");
-    printf("Choose a number: ");
+    printf("\n- Jogador:\n");
+    printf("Escolha um numero: ");
     ans = numberChecker();
     printf("\n");
     for (int i = 0; i < 7; i++){
@@ -110,14 +110,14 @@ int aiPlaySecond() { // main function to play the game against AI (player goes f
 	        printBinaryBoard(pos, ans);
 	    }        
         if (winCheck(binarySlots)==4){
-            printf(" ------------------------ The AI won! ------------------------\n");
+            printf(" ------------------------ A IA venceu! ------------------------\n");
             system("pause");
             return 0;
         }
         ans = aiChooseNumber();
         printf("\n");
-        printf("- Player:\n");
-        printf("\nChoose a position for the number %X: ", ans);
+        printf("- Jogador:\n");
+        printf("\nEscolha uma posicao para numero %X: ", ans);
         pos = positionChecker();
         binaryArray(pos,ans);
         printf("\n");
@@ -127,11 +127,11 @@ int aiPlaySecond() { // main function to play the game against AI (player goes f
 	        printBinaryBoard(pos, ans);
 	    }
         if (winCheck(binarySlots)==4){
-            printf(" ------------------------ You won! ------------------------\n");
+            printf(" ------------------------ Voce venceu! ------------------------\n");
             system("pause");
             return 0;
         }
-        printf("Choose a number: ");
+        printf("Escolha um numero: ");
         ans = numberChecker();
         printf("\n");
 
@@ -144,14 +144,14 @@ int aiPlaySecond() { // main function to play the game against AI (player goes f
         printBinaryBoard(pos, ans);
     }        
     if (winCheck(binarySlots)==4){
-        printf(" ------------------------ The AI won! ------------------------\n");
+        printf(" ------------------------ A IA venceu! ------------------------\n");
         system("pause");
         return 0;
     }
     ans = aiChooseNumber();
         printf("\n");
-        printf("- Player:\n");
-        printf("\nChoose a position for the number %X: ", ans);
+        printf("- Jogador:\n");
+        printf("\nEscolha uma posicao para o numero %X: ", ans);
         pos = positionChecker();
         binaryArray(pos,ans);
         printf("\n");
@@ -161,22 +161,22 @@ int aiPlaySecond() { // main function to play the game against AI (player goes f
 	        printBinaryBoard(pos, ans);
 	    }
         if (winCheck(binarySlots)==4){
-            printf(" ------------------------ You won! ------------------------\n");
+            printf(" ------------------------ Voce venceu! ------------------------\n");
             system("pause");
             return 0;
         } else {
-            printf(" ------------------------ It's a Tie! ------------------------\n");
+            printf(" ------------------------ Empate! ------------------------\n");
             system("pause");
             return 0;
         }
 }
 
-int aiPlayFirst() { // main function to play the game against AI (AI goes first)
+int aiPlayFirst() { // função principal para jogar o jogo contra a IA (jogador joga primeiro)
     int pos, ans;
     ans = aiChooseNumber();
     for (int i = 0; i < 7; i++){
-        printf("\n- Player:\n");
-        printf("\nChoose a position for the number %X: ", ans);
+        printf("- Jogador:\n");
+        printf("\nEscolha uma posicao para o numero %X: ", ans);
         pos = positionChecker();
         binaryArray(pos,ans);
         printf("\n");
@@ -186,11 +186,11 @@ int aiPlayFirst() { // main function to play the game against AI (AI goes first)
 	        printBinaryBoard(pos, ans);
 	    }
         if (winCheck(binarySlots)==4){
-            printf(" ------------------------ You won! ------------------------\n");
+            printf(" ------------------------ Voce venceu! ------------------------\n");
             system("pause");
             return 0;
         }
-        printf("Choose a number: ");
+        printf("Escolha um numero: ");
         ans = numberChecker();
         printf("\n");
         pos = aiPlace(ans);
@@ -201,15 +201,15 @@ int aiPlayFirst() { // main function to play the game against AI (AI goes first)
 	        printBinaryBoard(pos, ans);
 	    }        
         if (winCheck(binarySlots)==4){
-            printf(" ------------------------ The AI won! ------------------------\n");
+            printf(" ------------------------ A IA venceu! ------------------------\n");
             system("pause");
             return 0;
         }
         ans = aiChooseNumber();
     }
     printf("\n");
-    printf("- Player:\n");
-    printf("\nChoose a position for the number %X: ", ans);
+    printf("- Jogador:\n");
+    printf("\nEscolha uma posicao para o numero %X: ", ans);
     pos = positionChecker();
     binaryArray(pos,ans);
     printf("\n");
@@ -223,7 +223,7 @@ int aiPlayFirst() { // main function to play the game against AI (AI goes first)
         system("pause");
         return 0;
     }
-    printf("Choose a number: ");
+    printf("Escolha um numero: ");
     ans = numberChecker();
     printf("\n");
     pos = aiPlace(ans);
@@ -234,11 +234,11 @@ int aiPlayFirst() { // main function to play the game against AI (AI goes first)
         printBinaryBoard(pos, ans);
     }        
     if (winCheck(binarySlots)==4){
-        printf(" ------------------------ The AI won! ------------------------\n");
+        printf(" ------------------------ A IA venceu! ------------------------\n");
         system("pause");
         return 0;
     } else {
-        printf(" ------------------------ The AI won! ------------------------\n");
+        printf(" ------------------------ Empate! ------------------------\n");
         system("pause");
         return 0;
     }

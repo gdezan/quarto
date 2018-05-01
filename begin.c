@@ -4,53 +4,53 @@
 #include "begin.h"
 #include "ai.h"
 
-void boardTypeCheck(){  // checks what on type of board the user wants to play
+void boardTypeCheck(){  // confere o tipo de tabuleiro a ser jogado
     char board[255];
-    printf("Welcome to Quarto!\n\nPlease choose your board type by entering the corresponding letter:\n[h] Fills the board with hexadecimal numbers -- [b] Fills the board with binary numbers\n\n" );
+    printf("Bem-vindo ao jogo Quarto!\n\nEscolha o seu tabuleiro:\n[h] Preenche o tabuleiro com numeros hexadecimais -- [b] Preenche o tabuleiro com numeros binarios\n\n" );
     scanf("%s", board);
     for(;;){
-        if ((board[0] == 72 || board[0] == 104) && strlen(board)==1){ // if the input is 'H' or 'h'
+        if ((board[0] == 72 || board[0] == 104) && strlen(board)==1){ // se a entrada for 'H' ou 'h'
             boardType = HEXADECIMAL;
             break;
-        } else if ((board[0] == 66 || board[0] == 98) && strlen(board)==1){ // if the input is 'B' or 'b'
+        } else if ((board[0] == 66 || board[0] == 98) && strlen(board)==1){ // se a entrada for 'B' ou 'b'
             boardType = BINARY;
             break;
         } else {
-            printf("Please try again typing the letter \"h\" or the letter \"b\"\n");
+            printf("Por favor tente de novo usando a letra \"h\" ou a letra \"b\"\n");
             scanf("%s", board);
         }
     }
 }
 
-int gameTypeCheck(){  // checks if the player wants to go agains the ai (going first or second) or if he wants to play against another person (multiplayer)
+int gameTypeCheck(){  // verifica se o jogador quer ir contra a IA (indo primeiro ou segundo) ou se ele quer jogar contra outra pessoa (multiplayer)
     char type[255];
-    printf("\nPlease choose your game type by entering the corresponding number:\n[1] Multiplayer -- [2] vs. AI (AI goes first) -- [3] vs. AI (AI goes second)\n\n" );
+    printf("\nEscolha o seu modo de jogo:\n[1] Multiplayer -- [2] vs. IA (IA joga primeiro) -- [3] vs. IA (Voce joga primero)\n\n" );
     scanf("%s", type);
     for(;;){
-        if ((type[0] == 49) && strlen(type)==1){ // if the input is 1
+        if ((type[0] == 49) && strlen(type)==1){
             return 1;
             break;
-        } else if ((type[0] == 50) && strlen(type)==1){ // if the input is 2
+        } else if ((type[0] == 50) && strlen(type)==1){
             return 2;
             break;
-        } else if ((type[0] == 51) && strlen(type)==1){ // if the input is 3
+        } else if ((type[0] == 51) && strlen(type)==1){
             return 3;
             break;
         } else {
-            printf("Please try again by typing the number \"1\", \"2\" or \"3\".\n");
+            printf("Por favor tente de novo usando o numero \"1\", \"2\" ou \"3\".\n");
             scanf("%s", type);
         }
     }
 }
 
-void initializeSlots(){  // initializes the answer arrays
+void initializeSlots(){  // inicializa o vetor das respostas
     for (int i = 0; i < 16; i++){
         slots[i] = EMPTY;
         binarySlots[i][0] = EMPTY;
     }
 }
 
-void binaryArray (int position, int number) { // takes the hex inputs and puts them in a array of binary numbers
+void binaryArray (int position, int number) { // pega os valores em hexadecimal e os converte para um vetor de numeros binarios
     for (int i = 0; i < 4; i++){
         binarySlots[position][3-i] = (number % 2);
         number = number / 2;
@@ -58,7 +58,7 @@ void binaryArray (int position, int number) { // takes the hex inputs and puts t
 }
 
 
-void printHexBoard(int position, int number){ // prints the board after receiving the position and the number of the new answer (using hexadecimal numbers)
+void printHexBoard(int position, int number){ // mostra o tabuleiro (hexadecimal) e preenche o array de respostas após receber o número e sua posição
     slots[position] = number;
     int counter = 0;
     for (int i = 0; i < 4; i++){
@@ -76,7 +76,7 @@ void printHexBoard(int position, int number){ // prints the board after receivin
     printf("\n");
 }
 
-void printBinaryBoard(int position, int number){ // prints the board using binary numbers
+void printBinaryBoard(int position, int number){ // mostra o tabuleiro (binário) e preenche o array de respostas após receber o número e sua posição
     slots[position] = number;
     int counter = 0;
     for (int i = 0; i < 4; i++){
@@ -98,7 +98,7 @@ void printBinaryBoard(int position, int number){ // prints the board using binar
     printf("\n");
 }
 
-int numberChecker(){  // uses a loop to take and check the if the input is compatible and, if not, take the input again
+int numberChecker(){  // funçao para conferir se o numero é válido e, se não for, pedir outro numero
     char readUser[255];
     int required;
     int used;
@@ -114,15 +114,15 @@ int numberChecker(){  // uses a loop to take and check the if the input is compa
         if (((readUser[0] <= 57 && readUser[0] >= 48) || (readUser[0] <= 70 && readUser[0] >= 65) || (readUser[0] <= 102 && readUser[0] >= 97)) && used == 0 && strlen(readUser)==1){ // checks if input is a hexadecimal number
             break;
         } else if (((readUser[0] <= 57 && readUser[0] >= 48) || (readUser[0] <= 70 && readUser[0] >= 65) || (readUser[0] <= 102 && readUser[0] >= 97)) && used == 1 && strlen(readUser)==1){
-            printf("This number has already been used. Please choose another one: ");
+            printf("Esse numero ja foi usado. Por favor escolha outro: ");
         } else {
-            printf("Please try again using a number between 0 and F (hex): ");
+            printf("Tente de novo usando um numero entre 0 e F (hex): ");
         }
     }
     return required;
 }
 
-int positionChecker(){  // uses a loop to take and check the if the position is not taken and, if it is, take the position again
+int positionChecker(){  // funçao para conferir se a posição é válida e, se não for, pedir outra posição
     char readUser[255];
     int required;
     int used;
@@ -136,18 +136,18 @@ int positionChecker(){  // uses a loop to take and check the if the position is 
         if (((readUser[0] <= 57 && readUser[0] >= 48) || (readUser[0] <= 70 && readUser[0] >= 65) || (readUser[0] <= 102 && readUser[0] >= 97)) && used == 0 && strlen(readUser)==1){ // checks if input is a hexadecimal number
             break;
         } else if (((readUser[0] <= 57 && readUser[0] >= 48) || (readUser[0] <= 70 && readUser[0] >= 65) || (readUser[0] <= 102 && readUser[0] >= 97)) && used == 1 && strlen(readUser)==1){
-            printf("This position has already been used. Please choose another one: ");
+            printf("Essa posicao ja foi usada. Por favor escolha outra: ");
         } else {
-            printf("Please try again using a number between 0 and F (hex): ");
+            printf("Tente de novo usando um numero entre 0 e F (hex): ");
         }
     }
     return required;
 }
 
-int winCheck(int arr[16][4]) { //function to check victory
+int winCheck(int arr[16][4]) { // função para conferir se há a vitória
     int won = 0;
     int slot, bit, line, column;
-    for (line = 0; line < 16; line = line+4){  //checks if there is any alignments on the lines
+    for (line = 0; line < 16; line = line+4){  // confere se há vitória nas linhas
         for (bit = 0; bit < 4; bit++) {
             for (slot = line; slot < line+4; slot++){
                 if (arr[slot][bit] == arr[slot+1][bit] && arr[slot][0] != -1 && slot == line){
@@ -167,7 +167,7 @@ int winCheck(int arr[16][4]) { //function to check victory
             }
         }
     }
-    for (column = 0; column < 4; column++){  //checks if there is any alignments on the columns
+    for (column = 0; column < 4; column++){  // confere se há vitória nas colunas
         for (bit = 0; bit < 4; bit++) {
             for (slot = column; slot < column+13; slot = slot+4){
                 if (arr[slot][bit] == arr[slot+4][bit] && arr[slot][0] != -1 && slot == column){
@@ -187,7 +187,7 @@ int winCheck(int arr[16][4]) { //function to check victory
             }
         }
     }
-    for (bit = 0; bit < 4; bit++) {   //checks if there is any alignments on the first diagonal (slots 0, 5, A and F)
+    for (bit = 0; bit < 4; bit++) {   // confere se há vitória na primeira diagonal (0, 5, A e F)
         for (slot = 0; slot < 16; slot = slot+5){
             if (arr[slot][bit] == arr[slot+5][bit] && arr[slot][0] != -1 && slot == 0){
                 won++;
@@ -205,7 +205,7 @@ int winCheck(int arr[16][4]) { //function to check victory
             won = 0;
         }
     }
-    for (bit = 0; bit < 4; bit++) {   //checks if there is any alignments on the second diagonal (slots 3, 6, 9 and C)
+    for (bit = 0; bit < 4; bit++) {   // confere se há vitória na primeira diagonal (3, 6, 9 e C)
         for (slot = 3; slot < 13; slot = slot+3){
             if (arr[slot][bit] == arr[slot+3][bit] && arr[slot][0] != -1 && slot == 3){
                     won++;
@@ -226,21 +226,21 @@ int winCheck(int arr[16][4]) { //function to check victory
     return won;
 }
 
-int multiplayer() { // main function to play the game with no AI
+int multiplayer() { // função principal para jogar o jogo sem a IA
     int pos, ans, pNumber;
-    printf("\n- Player 1:\n");
-    printf("Choose a number: ");
+    printf("\n- Jogador 1:\n");
+    printf("Escolha um numero: ");
     ans = numberChecker();
     printf("\n");
     for (int i = 0; i < 15; i++){
-        if (i % 2 != 0) {  // attributes a number to the player (player 1 / player 2)
+        if (i % 2 != 0) {  // dá um número para o jogador (Jogador 1 / Jogador 2)
             pNumber = 1;
-            printf("- Player %d:", pNumber);
+            printf("- Jogador %d:", pNumber);
         } else {
             pNumber = 2;
-            printf("- Player %d:", pNumber);
+            printf("- Jogador %d:", pNumber);
         }
-        printf("\nChoose a position for the number %X: ", ans);
+        printf("\nEscolha uma posicao para numero %X: ", ans);
         pos = positionChecker();
         binaryArray(pos,ans);
         printf("\n");
@@ -251,18 +251,18 @@ int multiplayer() { // main function to play the game with no AI
 	    }
         
         if (winCheck(binarySlots)==4){
-            printf(" ------------------------ Player %d won! ------------------------\n", pNumber);
+            printf(" ------------------------ Jogador %d won! ------------------------\n", pNumber);
             system("pause");
             return 0;
         }
 
-        printf("Choose a number: ");
+        printf("Escolha um numero: ");
         ans = numberChecker();
         printf("\n");
 
     }
-    printf("- Player 2:\n");
-    printf("\nChoose a position for the number %X: ", ans);
+    printf("- Jogador 2:\n");
+    printf("\nEscolha uma posicao para numero %X: ", ans);
     pos = positionChecker();
     binaryArray(pos,ans);
     printf("\n");
@@ -273,11 +273,11 @@ int multiplayer() { // main function to play the game with no AI
     }
 
     if (winCheck(binarySlots)==4){
-        printf(" ------------------------ Player %d won! ------------------------\n", pNumber);
+        printf(" ------------------------ Jogador %d won! ------------------------\n", pNumber);
         system("pause");
         return 0;
     } else {
-    	printf(" ------------------------ It's a Tie! ------------------------\n");
+    	printf(" ------------------------ Empate! ------------------------\n");
     	system("pause");
         return 0;
     }

@@ -1,9 +1,9 @@
 #ifndef ai_H_
 #define ai_H_
 
-int aiPlayFirst();      // main function to play the game against AI (AI goes first)
-int aiPlaySecond();     // main function to play the game against AI (player goes first)
-int aiChooseNumber();   // will return a new piece for the player to choose the position
-int aiPlace(int ans);   // will return the position of the piece chosen by the player
+int aiPlayFirst();      // função principal para jogar o jogo contra a IA (IA joga primeiro)
+int aiPlaySecond();     // função principal para jogar o jogo contra a IA (jogador joga primeiro)
+int aiChooseNumber();   // retorna um número para o jogador posicionar
+int aiPlace(int ans);   // retorna a posição da peça escolhida pelo jogador
 
 #endif

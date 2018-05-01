@@ -10,16 +10,16 @@ int slots[16];
 int binarySlots[16][4];
 int boardType;
 
-void boardTypeCheck ();                            // asks the user the type of board he wants to play
-void initializeSlots();                            // initializes the answer array to print empty spaces on the board
-void binaryArray (int position, int number);       // takes the hex inputs and puts them in a array of binary numbers
-void printHexBoard(int position, int number);      // prints the board after receiving the position and the number of the new answer (using hexadecimal numbers)
-void printBinaryBoard(int position, int number);   // prints the board using binary numbers
-int gameTypeCheck();                               // checks if the player wants to go agains the ai (going first or second) or if he wants to play against another person (multiplayer)
-int multiplayer();                                 // main function to play the game with no AI
-int numberChecker();                               // uses a while loop to take and check the if the input is compatible and, if not, take the input again
-int positionChecker();                             // uses a while loop to take and check the if the position is not taken and, if it is, take the position again
-int winCheck();                                    // function to check victory
+void boardTypeCheck ();                            // confere o tipo de tabuleiro a ser jogado
+void initializeSlots();                            // inicializa o vetor das respostas
+void binaryArray (int position, int number);       // pega os valores em hexadecimal e os converte para um vetor de numeros binarios
+void printHexBoard(int position, int number);      // mostra o tabuleiro (hexadecimal) e preenche o array de respostas após receber o número e sua posição
+void printBinaryBoard(int position, int number);   // mostra o tabuleiro (binário) e preenche o array de respostas após receber o número e sua posição
+int gameTypeCheck();                               // verifica se o jogador quer ir contra a IA (indo primeiro ou segundo) ou se ele quer jogar contra outra pessoa (multiplayer)
+int multiplayer();                                 // função principal para jogar o jogo sem a IA
+int numberChecker();                               // funçao para conferir se o numero é válido e, se não for, pedir outro numero
+int positionChecker();                             // funçao para conferir se a posição é válida e, se não for, pedir outra posição
+int winCheck();                                    // função para conferir se há a vitória
 
 
 #endif
